@@ -1,2 +1,3 @@
 _build/dayemon
 makefile
+.env
