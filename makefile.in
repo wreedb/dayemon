@@ -1,0 +1,5 @@
+ARCH:=
+PREFIX:=/usr/local
+
+def:
+	@echo "${ARCH}"

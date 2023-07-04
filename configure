@@ -1,0 +1,20 @@
+#!/bin/sh
+
+arch=$(lscpu | grep "^Architecture" | awk '{print $2}')
+
+case $arch in
+  "x86_64")
+    printf "Configure: CPU Architecture detected:\t\x1B[33m(x86_64/amd64)\x1B[0m\n"
+    arch="--cpu:amd64"
+    printf -- "ARCH:=$arch" | cat - makefile.in > /tmp/dayemon_tmp
+    mv /tmp/dayemon_tmp $(pwd)/makefile
+  "aarch64")
+    printf "Configure: CPU Architecture detected:\t\x1B[33m(aarch64/arm64)\x1B[0m\n"
+    arch="--cpu:arm64"
+    printf -- "ARCH:=$arch" | cat - makefile.in > /tmp/dayemon_tmp
+    mv /tmp/dayemon_tmp $(pwd)/makefile
+  *)
+    printf "your cpu is not supported\n";;
+esac
+
+
