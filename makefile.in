@@ -1,5 +1,17 @@
-ARCH:=
 PREFIX:=/usr/local
 
-def:
-	@echo "${ARCH}"
+DEFAULT_GOAL:
+	nim cc --forceBuild:on --out:dayemon --outdir:_build --os:linux ${ARCH} --opt:speed --mm:orc -d:release src/main.nim
+	strip _build/dayemon
+
+clean:
+	mkdir -p _build
+	rm -rvf _build/*
+	rmdir -v _build
+	rm -v ./makefile
+
+install:
+	install -Dm 755 _build/dayemon ${PREFIX}/bin/dayemon
+
+compress:
+	upx -qqq --exact --best _build/dayemon

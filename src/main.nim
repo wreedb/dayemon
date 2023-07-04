@@ -1,4 +1,4 @@
-import lib/yaml/yaml/serialization
+import ../lib/yaml/yaml/serialization
 
 from posix_utils import sendSignal
 from strutils    import parseInt, strip, splitLines, contains, Newlines
