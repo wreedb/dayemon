@@ -1,0 +1,15 @@
+- name: wbg
+  opts: ~/Pictures/wallpapers/bg1.png
+  restart: true
+
+- name: dunst
+  opts: null
+  restart: false
+
+- name: waybar
+  opts: null
+  restart: true
+
+- name: emacs
+  opts: --daemon
+  restart: false
