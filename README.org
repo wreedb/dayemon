@@ -13,7 +13,7 @@ tool that I could use to simplify the launching/reloading of [[https://en.wikipe
 software and programs that need only launch once, such that when reloading my\\
 WM/Wayland compositor, I am not attempting to relaunch things such as\\
 notification daemons, polkit daemons, my Emacs daemon, etc. However,\\
-~Dayemon~ does offer the option to stop and restart processes.\\
+~Dayemon~ does offer the option to stop and restart processes. \\
 
 * Building
 :PROPERTIES:
