@@ -12,6 +12,9 @@ clean:
 
 install:
 	install -Dm 755 _build/dayemon ${PREFIX}/bin/dayemon
+	mkdir -p ${PREFIX}/share/doc/dayemon
+	cp ./doc/example_init.yaml ${PREFIX}/share/doc/dayemon/example_init.yaml
+
 
 compress:
 	upx -qqq --exact --best _build/dayemon

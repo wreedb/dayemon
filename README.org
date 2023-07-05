@@ -1,0 +1,139 @@
+#+TITLE: Dayemon
+#+DESCRIPTION: Easy program launching from yaml configuration
+#+OPTIONS: toc:nil
+
+* Dayemon
+
+A command-line utility for launching or restarting programs as defined by a [[https://yaml.org/][yaml]] configuration file.
+
+[[./assets/config_example.png]]
+
+I frequently use tiling window managers and Wayland compositors, and I wanted a\\
+tool that I could use to simplify the launching/reloading of [[https://en.wikipedia.org/wiki/Daemon_(computing)#Unix-like_systems][daemon]]-like\\
+software and programs that need only launch once, such that when reloading my\\
+WM/Wayland compositor, I am not attempting to relaunch things such as\\
+notification daemons, polkit daemons, my Emacs daemon, etc. However,\\
+~Dayemon~ does offer the option to stop and restart processes.\\
+
+* Building
+:PROPERTIES:
+:UNNUMBERED:
+:CUSTOM_ID: building
+:END:
+** Dependencies
+:PROPERTIES:
+:UNNUMBERED:
+:CUSTOM_ID: dependencies
+:END:
+You will need the [[https://nim-lang.org/][Nim]] compiler, you can get it through your system package\\
+manager (pacman, apt, dnf, zypper,etc.), if it is available in your\\
+repositories. Click on the banner below to find it for your distro.
+
+#+begin_export html
+<a href="https://repology.org/project/nim/versions" style="left: 20px">
+<img src="https://repology.org/badge/tiny-repos/nim.svg" alt="Packaging status">
+</a>
+#+end_export
+
+Alternatively, you can obtain it easily from [[https://nim-lang.org/install_unix.html][choosenim]] --which works on a\\
+variety of systems.
+
+Lastly, you will also need a C compiler, such as
+[[https://gcc.gnu.org/][GCC]] or [[https://clang.llvm.org/][Clang]] for Nim to work properly.
+
+** Cloning
+:PROPERTIES:
+:UNNUMBERED:
+:CUSTOM_ID: cloning
+:END:
+#+begin_src sh
+git clone --recurse-submodules https://codeberg.org/wreed/dayemon && cd dayemon
+# or
+git clone https://codeberg.org/wreed/dayemon && cd dayemon
+git submodule update --init
+#+end_src
+
+** Compiling
+:PROPERTIES:
+:UNNUMBERED:
+:CUSTOM_ID: compiling
+:END:
+Using [[https://www.gnu.org/software/make/][make]]\\
+  By default, dayemon will install to ~/usr/local/bin/dayemon~,\\
+  but the can be overridden by passing ~PREFIX=/alternate/path/to/install~
+#+begin_src sh
+./configure   # this will determine your architecture
+make          # compiles dayemon
+make install  # (with sudo/doas privilege) installs dayemon
+make clean    # if you need to rebuild dayemon
+
+PREFIX=$HOME/.local make install  # single-user install
+PREFIX=/usr make install          # system wide install
+#+end_src
+
+Using [[https://just.systems/][just]]\\
+  again, default install location is ~/usr/local/bin~,\\
+  but can be overridden with ~prefix=~ as shown below.
+#+begin_src sh
+just make
+just install  # may need sudo/doas privilege
+
+just prefix=$HOME/.local install # single-user install
+just prefix=/usr install         # system wide install
+#+end_src
+
+* Configuring
+:PROPERTIES:
+:UNNUMBERED:
+:CUSTOM_ID: configuring
+:END:
+Dayemon is configured through [[https://yaml.org/][Yaml]]. By default, it will look for a file\\
+located in your home directory under ~~/.config/dayemon~ for a file named\\
+~init.yaml~ or ~init.yml~. An example configuration file gets installed\\
+under ~/usr/local/share/doc/dayemon/init.yaml~ or accordingly under where\\
+your =prefix= variable pointed to. You can also find an example file\\
+within the repository [[file:./doc/example_init.yaml][here]].
+
+| key     | value                                                                                                                 |
+|---------+-----------------------------------------------------------------------------------------------------------------------|
+| name    | string: the name of the program                                                                                       |
+| opts    | null or string: options to pass to the program                                                                        |
+| restart | bool (true/false): if you want the program to be killed and restarted if it is already active when Dayemon is invoked |
+
+Here are two examples using [[https://dunst-project.org][Dunst]] and [[https://www.gnu.org/software/emacs/][Emacs]]
+#+begin_src yaml
+- name: dunst
+  opts: null
+  restart: false
+
+- name: emacs
+  opts: --daemon
+  restart: false
+#+end_src
+
+Once you have the configuration file in place, you can simply\\
+run ~dayemon~ to start your processes or run the command from\\
+within a startup script. They will be executed\\
+from top to bottom in the file.
+
+You can also give ~dayemon~ an argument of a path to an alternate\\
+configuration file, no flags needed.
+
+* Contributing/Contact
+:PROPERTIES:
+:UNNUMBERED:
+:CUSTOM_ID: contributing-contact
+:END:
+Feel free to contribute, I'd be happy to accept. If you are unsure about\\
+guidelines, consult the [[https://nim-lang.org/docs/nep1.html][Nim style guide]], however I prefer variables named\\
+using [[https://www.freecodecamp.org/news/snake-case-vs-camel-case-vs-pascal-case-vs-kebab-case-whats-the-difference/][snake case]] rather than camel case, and types named using pascal case.
+
+You can contact me via [[mailto:wreedb@proton.me][email]].
+
+* License
+:PROPERTIES:
+:UNNUMBERED:
+:CUSTOM_ID: license
+:END:
+~Dayemon~ uses the BSD-2-Clause license\\
+See [[file:./LICENSE][LICENSE]] for more information.
