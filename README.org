@@ -86,7 +86,7 @@ just prefix=/usr install         # system wide install
 :CUSTOM_ID: configuring
 :END:
 Dayemon is configured through [[https://yaml.org/][Yaml]]. By default, it will look for a file
-located in your home directory under ~~/.config/dayemon~ for a file named
+located in your home directory under ~/home/username/.config/dayemon~ for a file named
 ~init.yaml~ or ~init.yml~. An example configuration file gets installed
 under ~/usr/local/share/doc/dayemon/init.yaml~ or accordingly under where
 your =prefix= variable pointed to. You can also find an example file
